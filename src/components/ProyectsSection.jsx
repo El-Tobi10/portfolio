@@ -6,7 +6,7 @@ const proyects = [
         title: "Ecommerce de hardware",
         description:"Tienda de ecommerce con mapa para venta local, modelo 3D interactivo didáctico, chat con IA (en producción, se agregará carrito de compras).",
         image: "./proyectos/pczone.png",
-        tags: ["Next", "TailwindCSS", "Supabase", "Prisma", "TypeScript"],
+        tags: ["Next.js", "TailwindCSS", "Supabase", "Prisma", "TypeScript"],
         demoUrl: "#",
         githubUrl: "https://github.com/pcZone-org/pczone-web",
     },
@@ -21,12 +21,12 @@ const proyects = [
     },
     {
         id: 3,
-        title: "Best Gamer",
-        description:"En BestGamer puedes encontrar informacion sobre algunos Videojuegos, donde puedes ver de que se trata, un trailer oficial, donde puedes comprarlo y los requisitos minimos y recomendados para jugarlos.",
-        image: "./proyectos/BestGamer.png",
-        tags: ["HTML", "CSS", "JavaScript", "PHP", "Bootstrap", "xampp", "Ajax", "Jquery"],
-        demoUrl: "#",
-        githubUrl: "https://github.com/El-Tobi10/repo",
+        title: "Recalde Inmobiliaria",
+        description:"Sitio para una inmobiliaria de la costa atlántica, en producción.",
+        image: "./proyectos/recald.png",
+        tags: ["Next.js", "Vercel", "Supabase", "TypeScript", "TailwindCSS"],
+        demoUrl: "https://recaldeinmobiliaria.com/",
+        githubUrl: "#",
     }
 ]
 

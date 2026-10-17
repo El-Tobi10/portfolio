@@ -1,9 +1,10 @@
 import { ArrowUpRight, Gamepad2, ScrollText, Wrench } from "lucide-react";
+import Image from "next/image";
 
 const games = [
   {
     number: "01",
-    title: "Qlifot",
+    title: "Crimson Faith: The Heretic",
     typeEs: "SOULSLIKE · FANTASÍA OSCURA",
     typeEn: "SOULSLIKE · DARK FANTASY",
     descriptionEs: "Un mundo marcado por un culto antiguo, profetas exiliados y una verdad enterrada bajo las raíces del bosque. Un proyecto centrado en atmósfera, narrativa ambiental y combate.",
@@ -38,7 +39,33 @@ export const GameSection = ({ english }) => (
         <div className={"game-cover " + game.cover}>
           <div className="cover-grain" />
           <span className="cover-index">PROJECT {game.number}</span>
-          {game.number === "01" ? <><div className="qlifot-sun" /><div className="qlifot-spire spire-one" /><div className="qlifot-spire spire-two" /><div className="qlifot-forest" /><div className="cover-wordmark">QLIFOT</div><span className="cover-subtitle">{english ? "THE FOURTH PROPHET" : "EL CUARTO PROFETA"}</span></> : <><div className="crumb-moon" /><div className="pigeon-shape">✦</div><div className="crumb crumb-one">✳</div><div className="crumb crumb-two">✳</div><div className="crumb crumb-three">✳</div><div className="cover-wordmark crumb-wordmark">MIGAJERISMO</div><span className="cover-subtitle">{english ? "LOVE LEAVES CRUMBS" : "EL AMOR DEJA MIGAJAS"}</span></>}
+          {game.number === "01" ? 
+          <>
+            <Image src="../proyectos/ilustracionCFH.png" alt="Game Cover" />
+            <div className="cover-wordmark">{english ? "Crimson Faith".toUpperCase() : "LA FÉ CARMESÍ"}</div>
+            <span className="cover-subtitle">{english ? "THE HERETIC" : "EL HEREJE"}</span>
+          </>
+//                      <div className="qlifot-sun" />
+//
+//            <div className="qlifot-spire spire-one" />
+//
+//            <div className="qlifot-spire spire-two" />
+//
+//            <div className="qlifot-forest" />
+//
+//            <div className="background" href="../proyectos/ilustracionCFH.png" />
+//
+          : 
+          
+          <>
+            <div className="crumb-moon" />
+            <div className="pigeon-shape">✦</div>
+            <div className="crumb crumb-one">✳</div>
+            <div className="crumb crumb-two">✳</div>
+            <div className="crumb crumb-three">✳</div>
+            <div className="cover-wordmark crumb-wordmark">MIGAJERISMO</div>
+            <span className="cover-subtitle">{english ? "LOVE LEAVES CRUMBS" : "EL AMOR DEJA MIGAJAS"}</span>
+          </>}
           <span className="cover-status">{english ? "WORK IN PROGRESS" : "EN DESARROLLO"}</span>
         </div>
         <div className="game-details">

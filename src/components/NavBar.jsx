@@ -9,7 +9,7 @@ export const NavBar = ({ language, setLanguage }) => {
     : [["Inicio", "#hero"], ["Videojuegos", "#games"], ["Laboratorio", "#lab"], ["Software", "#software"], ["Sobre mí", "#about"], ["Contacto", "#contact"]];
 
   return (
-    <header className="site-header">
+    <header className="site-header fixed">
       <nav className="nav-inner" aria-label={english ? "Main navigation" : "Navegación principal"}>
         <a className="brand-mark" href="#hero" onClick={() => setMenuOpen(false)}>
           <span className="brand-monogram">T</span>
