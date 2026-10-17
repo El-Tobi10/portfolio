@@ -1,32 +1,30 @@
-import { ThemeToggle } from "@/components/ThemeToggle.jsx";
-import { StarBackground } from "@/components/StarBackground.jsx";
+import { useState } from "react";
 import { NavBar } from "@/components/NavBar.jsx";
 import { HeroSection } from "@/components/HeroSection.jsx";
-import { Footer } from "@/components/Footer.jsx";
+import { GameSection } from "@/components/GameSection.jsx";
+import { LabSection } from "@/components/LabSection.jsx";
+import { SoftwareSection } from "@/components/SoftwareSection.jsx";
 import { AboutSection } from "@/components/AboutSection.jsx";
-import { SkillsSection } from "@/components/SkillsSection.jsx";
-import { ProyectsSection } from "@/components/ProyectsSection.jsx";
 import { ContactSection } from "@/components/ContactSection.jsx";
+import { Footer } from "@/components/Footer.jsx";
 
 export const Home = () => {
-    return <div className="min-h-screen bg-backgroud text-foreground overflow-x-hidden"> 
-            {/*  Theme Toggle */}
-            <ThemeToggle />        
-            {/* Background effect */}
-            <StarBackground/>
+  const [language, setLanguage] = useState("es");
+  const english = language === "en";
 
-            {/* NavBar */}
-            <NavBar />
-            {/* Main content */}
-            <main>
-                <HeroSection/>
-                <AboutSection/>
-                <SkillsSection/>
-                <ProyectsSection/>
-                <ContactSection/>
-            </main>
-
-            {/* footer */}
-            <Footer/>
-        </div>
-} 
+  return (
+    <div className="portfolio-shell">
+      <div className="grain-overlay" aria-hidden="true" />
+      <NavBar language={language} setLanguage={setLanguage} />
+      <main>
+        <HeroSection english={english} />
+        <GameSection english={english} />
+        <LabSection english={english} />
+        <SoftwareSection english={english} />
+        <AboutSection english={english} />
+        <ContactSection english={english} />
+      </main>
+      <Footer english={english} />
+    </div>
+  );
+};
