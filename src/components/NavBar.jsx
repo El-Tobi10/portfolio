@@ -1,91 +1,35 @@
-import { cn } from "@/lib/utils";
-import { useEffect, useState } from "react";    
-import { Menu, X } from "lucide-react";
+import { useState } from "react";
+import { Menu, X, Languages } from "lucide-react";
 
-const navItems = [
-    {name: "Home", href: "#"},
-    {name: "Sobre mi", href: "#about"},
-    {name: "Skills", href: "#skills"},
-    {name: "Proyectos", href: "#projects"},
-    {name: "Contacto", href: "#contact"},
-];
+export const NavBar = ({ language, setLanguage }) => {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const english = language === "en";
+  const items = english
+    ? [["Home", "#hero"], ["Games", "#games"], ["Lab", "#lab"], ["Software", "#software"], ["About", "#about"], ["Contact", "#contact"]]
+    : [["Inicio", "#hero"], ["Videojuegos", "#games"], ["Laboratorio", "#lab"], ["Software", "#software"], ["Sobre mí", "#about"], ["Contacto", "#contact"]];
 
-export const NavBar = () => {
-    const [isSclrolled, setIsScrolled] = useState(false);
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-    useEffect(() => {
-        const handleScroll = () => {
-            setIsScrolled(window.scrollY > 10);
-        };
-
-        window.addEventListener("scroll", handleScroll);
-        return () => {
-            window.removeEventListener("scroll", handleScroll);
-        };
-    }, [])
-
-    return(
-        <nav className={cn(
-            "fixed w-full z-40 transition-all duration-300",
-            isSclrolled ? "py-3 bg-background/80 backdrop-blur-md shadow-xs" : "py-5",
-        )} >
-            <div className="container flex items-center justify-between">
-                <a 
-                    className="text-xl font-bold text-primary flex items-center"
-                    href="#hero"
-                >
-                    <span className="relative z-10">
-                        <span className="text-glow text-foreground">Tobias</span> Portfolio
-                    </span>
-                </a>
-                
-
-                {/* Desktop Nav */}
-                <div className="hidden md:flex space-x-8">
-                    {navItems.map((item, key) => (
-                        <a
-                            className="text-foreground/80 hover:text-primary transition-colors duration-300"
-                            key={key}
-                            href={item.href}
-                        >
-                            {item.name}
-                        </a>
-                    ))}
-                </div>
-
-                {/* Celular Nav */}
-                <button
-                    onClick={() => setIsMenuOpen((prev) => !prev)}
-                    className="md:hidden p-2 text-foreground z-50"
-                    aria-label={isMenuOpen ? "Close Menu" : "Open Menu"}
-                >
-                    {isMenuOpen ? <X size={24} /> : <Menu size={24} />}{" "}
-                </button>
-
-                <div
-                    className={cn(
-                        "fixed inset-0 bg-background/95 backdroup-blur-md z-40 flex flex-col items-center justify-center",
-                        "transition-all duration-300 md:hidden",
-                        isMenuOpen
-                        ? "opacity-100 pointer-events-auto"
-                        : "opacity-0 pointer-events-none"
-                    )}
-                >
-                    <div className="flex flex-col space-y-8 text-xl">
-                        {navItems.map((item, key) => (
-                            <a
-                                key={key}
-                                href={item.href}
-                                className="text-foreground/80 hover:text-primary transition-colors duration-300"
-                                onClick={() => setIsMenuOpen(false)}
-                            >
-                                {item.name}
-                            </a>
-                        ))}
-                    </div>
-                </div>
-            </div>
-        </nav>
-    )
-}
+  return (
+    <header className="site-header">
+      <nav className="nav-inner" aria-label={english ? "Main navigation" : "Navegación principal"}>
+        <a className="brand-mark" href="#hero" onClick={() => setMenuOpen(false)}>
+          <span className="brand-monogram">T</span>
+          <span className="brand-name">TOBIAS ALFONSO<small>THE TOTTO STUDIOS · CREATIVE ARCHIVE</small></span>
+        </a>
+        <div className="desktop-nav">
+          {items.map(([label, href]) => <a key={href} href={href}>{label}</a>)}
+        </div>
+        <div className="nav-actions">
+          <button className="language-toggle" onClick={() => setLanguage(english ? "es" : "en")} aria-label={english ? "Cambiar idioma a español" : "Switch language to English"}>
+            <Languages size={15} /> {english ? "EN" : "ES"} <span className="language-divider">/</span>{english ? "ES" : "EN"}
+          </button>
+          <button className="mobile-menu-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-label={menuOpen ? "Close menu" : "Open menu"}>
+            {menuOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </div>
+      </nav>
+      {menuOpen && <div className="mobile-nav">
+        {items.map(([label, href]) => <a key={href} href={href} onClick={() => setMenuOpen(false)}>{label}</a>)}
+      </div>}
+    </header>
+  );
+};

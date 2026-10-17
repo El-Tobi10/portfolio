@@ -1,200 +1,52 @@
-import {
-    Instagram,
-    Linkedin,
-    Mail,
-    MapPin,
-    Phone,
-    Send,
-    Github
-} from "lucide-react";
-import { cn } from "@/lib/utils";
-import { useToast } from "@/hooks/use-toast";
-import { useState, useRef } from "react";
+import { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
+import { Github, Instagram, Linkedin, Mail, MapPin, Send, ArrowUpRight } from "lucide-react";
 
-export const ContactSection = () =>{
-    const { toast } = useToast();
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const formRef = useRef(null);
+export const ContactSection = ({ english }) => {
+  const formRef = useRef(null);
+  const [sending, setSending] = useState(false);
+  const [messageState, setMessageState] = useState("");
 
-    
-    const handleSubmit = (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
-    emailjs
-        .sendForm(
-            "default_service",     
-            "template_oz4l4ir",    
-            formRef.current,
-            "jLT0e7lEuu-v2DUqm"      
-        )
-        .then(() => {
-            toast({
-                title: "¡Mensaje enviado!",
-                description: "Gracias por contactarme, me pondré en contacto contigo lo antes posible.",
-            });
-            setIsSubmitting(false);
-            formRef.current.reset();
-        })
-        .catch((error) => {
-            console.error("Error al enviar mensaje:", error);
-            toast({
-                title: "Error",
-                description: "No se pudo enviar tu mensaje. Intenta nuevamente más tarde.",
-            });
-            setIsSubmitting(false);
-        });
-    };
-    
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setSending(true);
+    setMessageState("");
+    emailjs.sendForm("default_service", "template_oz4l4ir", formRef.current, "jLT0e7lEuu-v2DUqm")
+      .then(() => {
+        setMessageState(english ? "Message sent. Thanks for reaching out." : "Mensaje enviado. ¡Gracias por escribirme!");
+        formRef.current.reset();
+      })
+      .catch(() => setMessageState(english ? "Something went wrong. Please try again later." : "Algo salió mal. Probá de nuevo más tarde."))
+      .finally(() => setSending(false));
+  };
 
-    return(
-        <section id="contact" className="py-24 px-4 relative bg-secondary/30">
-            <div className="container mx-auto max-w-5xl">
-                <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">
-                    Pongase en <span className="text-primary"> Contacto</span> conmigo
-                </h2>
-
-                <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
-                    ¿Tiene algún proyecto en mente o quiere colaborar? No dudes en ponerte
-                    en contacto conmigo. Siempre estoy dispuesto a hablar de nuevas
-                    oportunidades.
-                </p>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                    <div className="space-y-8">
-                        <h3 className="text-2xl font-semibold mb-6">Información de Contacto</h3>
-
-                        <div className="space-y-6 justify-center">
-
-                            <div className="flex items-start space-x-4">
-                                <div className="p-3 rounded-full bg-primary/10">
-                                    <Phone className="h-6 w-6 text-primary" />
-                                </div>
-                                <div>
-                                    <h4 className="font-medium">Teléfono</h4>
-                                    <a
-                                        href="https://api.whatsapp.com/send?phone=2255419860"
-                                        className="text-muted-foreground hover:text-primary transition-colors"
-                                        target="_blank"
-                                    >
-                                        +54 (2255) 419860
-                                    </a>
-                                </div>
-                            </div>
-
-                            <div className="flex items-start space-x-4">
-                                <div className="p-3 rounded-full bg-primary/10">
-                                    <MapPin className="h-6 w-6 text-primary" />
-                                </div>
-                                <div>
-                                    <h4 className="font-medium">Ubicación</h4>
-                                    <p className="text-muted-foreground flex items-center gap-2">
-                                        Buenos Aires, Argentina
-                                        <img
-                                            src="https://flagcdn.com/w40/ar.png"
-                                            alt="Bandera de Argentina"
-                                            className="inline w-5 h-5 rounded-sm"
-                                        />
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div className="flex items-start space-x-4">
-                                <div className="p-3 rounded-full bg-primary/10">
-                                    <Mail className="h-6 w-6 text-primary" />
-                                </div>
-                                <div>
-                                    <h4 className="font-medium">Email</h4>
-                                    <a
-                                        href="mailto:tobiasalfonso2301@gmail.com"
-                                        className="text-muted-foreground hover:text-primary transition-colors"
-                                    >
-                                        tobiasalfonso2301@gmail.com
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="pt-8">
-                            <h4 className="font-medium mb-4">Conecta conmigo</h4>
-                            <div className="flex space-x-4 justify-center">
-                                <a href="https://www.linkedin.com/in/tobias-alfonso-37a51926b/" target="_blank">
-                                    <Linkedin />
-                                </a>
-                                <a href="https://www.instagram.com/tobiasmg10/" target="_blank">
-                                    <Instagram />
-                                </a>
-                                <a href="https://github.com/El-Tobi10" target="_blank">
-                                    <Github />
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="bg-card p-8 rounded-lg shadow-xs">
-                        <h3 className="text-2xl font-semibold mb-6">Envia un mensaje</h3>
-
-                        <form
-                            ref={formRef}
-                            onSubmit={handleSubmit}
-                            className="space-y-6"
-                        >
-                            <div>
-                                <label htmlFor="name" className="block text-sm font-medium mb-2">
-                                    Tu nombre
-                                </label>
-                                <input
-                                    type="text"
-                                    id="name"
-                                    name="name"
-                                    required
-                                    className="w-full px-4 py-3 rounded-md border border-input bg-background focus:outline-hidden focus:ring-2 focus:ring-primary"
-                                    placeholder="Tobias Alfonso..."
-                                />
-                            </div>
-
-                            <div>
-                                <label htmlFor="email" className="block text-sm font-medium mb-2">
-                                    Tu correo electrónico
-                                </label>
-                                <input
-                                    type="email"
-                                    id="email"
-                                    name="email"
-                                    required
-                                    className="w-full px-4 py-3 rounded-md border border-input bg-background focus:outline-hidden focus:ring-2 focus:ring-primary"
-                                    placeholder="ejemplo@ejemplo.com"
-                                />
-                            </div>
-
-                            <div>
-                                <label htmlFor="message" className="block text-sm font-medium mb-2 ">
-                                    Tu mensaje
-                                </label>
-                                <textarea
-                                    id="message"
-                                    name="message"
-                                    required
-                                    className="w-full px-4 py-3 rounded-md border border-input bg-background focus:outline-hidden focus:ring-2 focus:ring-primary resize-none"
-                                    placeholder="Hola me gustaria contactarme contigo para..."
-                                />
-                            </div>
-
-                            <button
-                                type="submit"
-                                disabled={isSubmitting}
-                                className={cn(
-                                "cosmic-button w-full flex items-center justify-center gap-2"
-                                )}
-                            >
-                                {isSubmitting ? "Enviando..." : "Enviar mensaje"}
-                                <Send size={16} />
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </section>
-    )
-}
+  return (
+    <section id="contact" className="contact-section">
+      <div className="section-wrap contact-layout">
+        <div className="contact-copy">
+          <p className="eyebrow"><span className="eyebrow-line" />{english ? "SEND A SIGNAL" : "ENVIÁ UNA SEÑAL"}</p>
+          <h2>{english ? <>Have an idea?<br /><em>Let's give it a world.</em></> : <>¿Tenés una idea?<br /><em>Démosle un mundo.</em></>}</h2>
+          <p>{english ? "Open to junior opportunities, collaborations and conversations about game development, creative technology or strange little projects." : "Estoy abierto a oportunidades junior, colaboraciones y charlas sobre desarrollo de videojuegos, tecnología creativa o proyectos raros."}</p>
+          <a className="contact-email" href="mailto:tobiasalfonso2301@gmail.com"><Mail size={17} /> tobiasalfonso2301@gmail.com <ArrowUpRight size={15} /></a>
+          <div className="contact-location"><MapPin size={15} /> Buenos Aires, Argentina</div>
+          <div className="social-links">
+            <a href="https://github.com/El-Tobi10" target="_blank" rel="noreferrer" aria-label="GitHub"><Github /></a>
+            <a href="https://www.linkedin.com/in/tobias-alfonso-37a51926b/" target="_blank" rel="noreferrer" aria-label="LinkedIn"><Linkedin /></a>
+            <a href="https://www.instagram.com/tobiasmg10/" target="_blank" rel="noreferrer" aria-label="Instagram"><Instagram /></a>
+          </div>
+        </div>
+        <form className="contact-form" ref={formRef} onSubmit={handleSubmit}>
+          <span className="form-kicker">{english ? "MESSAGE / 001" : "MENSAJE / 001"}</span>
+          <label htmlFor="name">{english ? "Your name" : "Tu nombre"}</label>
+          <input id="name" name="name" required placeholder={english ? "How should I call you?" : "¿Cómo te llamás?"} />
+          <label htmlFor="email">{english ? "Email address" : "Tu correo electrónico"}</label>
+          <input id="email" name="email" type="email" required placeholder="you@example.com" />
+          <label htmlFor="message">{english ? "What are you thinking about?" : "¿Qué tenés en mente?"}</label>
+          <textarea id="message" name="message" rows="4" required placeholder={english ? "Tell me a little about it..." : "Contame un poco..." } />
+          <button className="button-primary form-submit" type="submit" disabled={sending}>{sending ? (english ? "Sending..." : "Enviando...") : (english ? "Send message" : "Enviar mensaje")} <Send size={15} /></button>
+          {messageState && <p className="form-status" role="status">{messageState}</p>}
+        </form>
+      </div>
+    </section>
+  );
+};
