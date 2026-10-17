@@ -1,5 +1,4 @@
 import { ArrowUpRight, Gamepad2, ScrollText, Wrench } from "lucide-react";
-import Image from "next/image";
 
 const games = [
   {
@@ -41,7 +40,7 @@ export const GameSection = ({ english }) => (
           <span className="cover-index">PROJECT {game.number}</span>
           {game.number === "01" ? 
           <>
-            <Image src="../proyectos/ilustracionCFH.png" alt="Game Cover" />
+            <img src="../proyectos/ilustracionCFH.png" alt="Crimson Faith: The Heretic" className="cover-image" />
             <div className="cover-wordmark">{english ? "Crimson Faith".toUpperCase() : "LA FÉ CARMESÍ"}</div>
             <span className="cover-subtitle">{english ? "THE HERETIC" : "EL HEREJE"}</span>
           </>
